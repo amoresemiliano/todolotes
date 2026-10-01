@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'Fraunces', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: #26221D;
+    background-color: #FAF8F5;
+  }
+}
+
+.font-editorial {
+  font-family: var(--font-serif);
+  letter-spacing: -0.015em;
+}
+
+.font-sans-clean {
+  font-family: var(--font-sans);
+}
+
+/* Subtle image zoom transition */
+.img-hover-zoom {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .img-hover-zoom {
+  transform: scale(1.035);
+}

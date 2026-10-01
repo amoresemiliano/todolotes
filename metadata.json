@@ -1,0 +1,6 @@
+{
+  "name": "Todo Lotes - Lotes y Terrenos en San Luis",
+  "description": "Portal inmobiliario de loteos y desarrollos en San Luis, Argentina. Terrenos con infraestructura, financiación accesible y asesoramiento personalizado.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
