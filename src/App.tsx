@@ -74,7 +74,7 @@ export default function App() {
       : null;
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#24211D] flex flex-col font-sans-clean antialiased selection:bg-[#3D553C] selection:text-white">
+    <div className="min-h-screen bg-[#FAF8F5] text-[#24211D] flex flex-col font-sans-clean antialiased selection:bg-[#C85A32] selection:text-white">
       {/* Universal Top Bar */}
       <Navbar
         onNavigate={handleNavigateSection}

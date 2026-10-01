@@ -4,6 +4,9 @@
   :root {
     --font-serif: 'Fraunces', Georgia, serif;
     --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --color-terracotta: #C85A32;
+    --color-mustard: #E5A238;
+    --color-olive: #3D583F;
   }
 
   html {
@@ -12,7 +15,7 @@
 
   body {
     font-family: var(--font-sans);
-    color: #26221D;
+    color: #24211D;
     background-color: #FAF8F5;
   }
 }
@@ -33,4 +36,11 @@
 
 .group:hover .img-hover-zoom {
   transform: scale(1.035);
+}
+
+/* Subtle topographic and cadastral graphic patterns */
+.pattern-cadastral {
+  background-image: radial-gradient(#C85A32 0.75px, transparent 0.75px), radial-gradient(#3D583F 0.5px, #FAF8F5 0.5px);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
 }

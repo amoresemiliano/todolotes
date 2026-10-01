@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Parcel, Loteo } from '../types';
 import { buildWhatsAppLink } from '../utils/whatsapp';
-import { CheckCircle2, Clock, Ban, ArrowRight, MessageCircle } from 'lucide-react';
+import { MessageCircle, Sun } from 'lucide-react';
 
 interface InteractiveMasterplanProps {
   loteo: Loteo;
@@ -12,36 +12,26 @@ export const InteractiveMasterplan: React.FC<InteractiveMasterplanProps> = ({ lo
     loteo.parcels.find((p) => p.status === 'Disponible') || loteo.parcels[0] || null
   );
 
-  const getStatusColor = (status: Parcel['status']) => {
-    switch (status) {
-      case 'Disponible':
-        return 'bg-[#3D553C] text-white hover:bg-[#2D412D] border-[#3D553C]';
-      case 'Reservado':
-        return 'bg-[#C28E46] text-white hover:bg-[#A87936] border-[#C28E46]';
-      case 'Vendido':
-        return 'bg-[#DDD5C9] text-[#787063] cursor-not-allowed border-[#DDD5C9] opacity-75';
-    }
-  };
-
   const getStatusBadge = (status: Parcel['status']) => {
     switch (status) {
       case 'Disponible':
-        return <span className="text-[#3D553C] font-semibold">Disponible para compra</span>;
+        return <span className="text-[#3D583F] font-semibold">Disponible para compra inmediata</span>;
       case 'Reservado':
-        return <span className="text-[#A87936] font-semibold">En proceso de reserva</span>;
+        return <span className="text-[#C28522] font-semibold">En proceso de reserva</span>;
       case 'Vendido':
         return <span className="text-[#8A8174] font-medium">Vendido</span>;
     }
   };
 
   return (
-    <div className="bg-[#F5F1EB] rounded-2xl p-6 sm:p-10 border border-[#E5DFD4]">
+    <div className="bg-[#F6F2EC] rounded-2xl p-6 sm:p-10 border border-[#E5DFD4]">
       {/* Header and Legend */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[#E2DBD0] mb-8">
         <div>
-          <span className="text-xs uppercase tracking-wider text-[#6D6558] font-medium block mb-1">
-            Plano y parcelamiento
-          </span>
+          <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-[#C85A32] font-semibold mb-1">
+            <Sun className="w-3.5 h-3.5 text-[#E5A238]" />
+            <span>Plano y parcelamiento</span>
+          </div>
           <h3 className="font-editorial text-2xl sm:text-3xl text-[#1E1B17]">
             Masterplan & Disponibilidad
           </h3>
@@ -50,15 +40,15 @@ export const InteractiveMasterplan: React.FC<InteractiveMasterplanProps> = ({ lo
           </p>
         </div>
 
-        {/* Legend - unboxed status indicators */}
+        {/* Legend */}
         <div className="flex items-center gap-4 text-xs">
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-xs bg-[#3D553C]" />
-            <span className="text-[#332D26]">Disponible</span>
+            <span className="w-3 h-3 rounded-xs bg-[#3D583F]" />
+            <span className="text-[#332D26] font-medium">Disponible</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-xs bg-[#C28E46]" />
-            <span className="text-[#332D26]">Reservado</span>
+            <span className="w-3 h-3 rounded-xs bg-[#E5A238]" />
+            <span className="text-[#332D26] font-medium">Reservado</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-3 h-3 rounded-xs bg-[#DDD5C9]" />
@@ -73,7 +63,7 @@ export const InteractiveMasterplan: React.FC<InteractiveMasterplanProps> = ({ lo
         <div className="lg:col-span-8 bg-[#FAF8F5] p-6 rounded-xl border border-[#E5DFD4]">
           <div className="flex items-center justify-between text-xs text-[#70675B] mb-4 pb-2 border-b border-[#EFEAE2]">
             <span>Esquema preliminar de manzanas y lotes</span>
-            <span>Hacé clic en una parcela para consultar</span>
+            <span className="text-[#C85A32] font-medium">Hacé clic en una parcela para consultar</span>
           </div>
 
           {/* Grid of parcels */}
@@ -84,15 +74,15 @@ export const InteractiveMasterplan: React.FC<InteractiveMasterplanProps> = ({ lo
                 <button
                   key={parcel.id}
                   onClick={() => setSelectedParcel(parcel)}
-                  className={`p-3.5 rounded-lg border text-left transition-all relative flex flex-col justify-between min-h-[92px] ${
+                  className={`p-3.5 rounded-lg border text-left transition-all relative flex flex-col justify-between min-h-[92px] cursor-pointer ${
                     isSelected
-                      ? 'ring-2 ring-[#3D553C] ring-offset-2 ring-offset-[#FAF8F5] shadow-sm'
+                      ? 'ring-2 ring-[#C85A32] ring-offset-2 ring-offset-[#FAF8F5] shadow-xs'
                       : ''
                   } ${
                     parcel.status === 'Disponible'
-                      ? 'bg-white hover:border-[#3D553C] border-[#DDD5C9]'
+                      ? 'bg-white hover:border-[#3D583F] border-[#DDD5C9]'
                       : parcel.status === 'Reservado'
-                      ? 'bg-[#FBF6EE] border-[#ECD8BE]'
+                      ? 'bg-[#FDF7EE] border-[#F0DCBE]'
                       : 'bg-[#EAE4DC]/60 border-[#DDD5C9] opacity-75'
                   }`}
                 >
@@ -101,17 +91,17 @@ export const InteractiveMasterplan: React.FC<InteractiveMasterplanProps> = ({ lo
                       {parcel.code}
                     </span>
                     <span
-                      className={`w-2 h-2 rounded-full ${
+                      className={`w-2.5 h-2.5 rounded-full ${
                         parcel.status === 'Disponible'
-                          ? 'bg-[#3D553C]'
+                          ? 'bg-[#3D583F]'
                           : parcel.status === 'Reservado'
-                          ? 'bg-[#C28E46]'
+                          ? 'bg-[#E5A238]'
                           : 'bg-[#9C9387]'
                       }`}
                     />
                   </div>
                   <div>
-                    <span className="font-editorial text-sm sm:text-base text-[#2E2821] block tabular-nums">
+                    <span className="font-editorial text-sm sm:text-base text-[#2E2821] block tabular-nums font-semibold">
                       {parcel.surfaceM2} m²
                     </span>
                     <span className="text-[11px] text-[#7A7165]">
@@ -124,8 +114,8 @@ export const InteractiveMasterplan: React.FC<InteractiveMasterplanProps> = ({ lo
           </div>
 
           <div className="mt-4 pt-3 border-t border-[#EFEAE2] flex items-center justify-between text-[11px] text-[#857C70]">
-            <span>* Las dimensiones definitivas surgen del plano de mensura aprobado.</span>
-            <span>Todo Lotes San Luis</span>
+            <span>* Las medidas definitivas surgen del plano de mensura aprobado.</span>
+            <span className="text-[#3D583F] font-medium">Todo Lotes San Luis</span>
           </div>
         </div>
 
@@ -133,7 +123,7 @@ export const InteractiveMasterplan: React.FC<InteractiveMasterplanProps> = ({ lo
         <div className="lg:col-span-4 bg-white p-6 rounded-xl border border-[#DDD5C9] shadow-xs">
           {selectedParcel ? (
             <div>
-              <div className="text-xs uppercase tracking-wider text-[#70675B] font-medium mb-1">
+              <div className="text-xs uppercase tracking-wider text-[#C85A32] font-semibold mb-1">
                 Detalle de Parcela
               </div>
               <h4 className="font-editorial text-2xl text-[#1E1B17] mb-1">
@@ -165,7 +155,7 @@ export const InteractiveMasterplan: React.FC<InteractiveMasterplanProps> = ({ lo
                   </div>
                 )}
                 {selectedParcel.featureNote && (
-                  <div className="pt-2 text-[11px] text-[#554D43] italic border-t border-dashed border-[#EAE4DC]">
+                  <div className="pt-2 text-[11px] text-[#635748] italic border-t border-dashed border-[#EAE4DC]">
                     Nota: {selectedParcel.featureNote}
                   </div>
                 )}
@@ -181,9 +171,9 @@ export const InteractiveMasterplan: React.FC<InteractiveMasterplanProps> = ({ lo
                   })}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-[#3D553C] hover:bg-[#2D412D] text-white text-xs font-semibold transition-colors shadow-xs"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-lg bg-[#3D583F] hover:bg-[#2F4932] text-white text-xs font-semibold transition-colors shadow-xs hover:shadow-sm"
                 >
-                  <MessageCircle className="w-4 h-4" />
+                  <MessageCircle className="w-4 h-4 text-[#E5A238]" />
                   <span>Consultar por {selectedParcel.code}</span>
                 </a>
               ) : selectedParcel.status === 'Reservado' ? (
@@ -194,12 +184,11 @@ export const InteractiveMasterplan: React.FC<InteractiveMasterplanProps> = ({ lo
                   <a
                     href={buildWhatsAppLink({
                       loteoName: loteo.name,
-                      parcelCode: selectedParcel.code,
-                      messageType: 'general'
+                      messageType: 'loteo'
                     })}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-[#EFEAE2] hover:bg-[#E5DFD4] text-[#24211D] text-xs font-medium transition-colors"
+                    className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-[#EFEAE2] hover:bg-[#E7DFC5] text-[#24211D] text-xs font-medium transition-colors"
                   >
                     <span>Consultar alternativas en este desarrollo</span>
                   </a>
@@ -222,3 +211,4 @@ export const InteractiveMasterplan: React.FC<InteractiveMasterplanProps> = ({ lo
     </div>
   );
 };
+

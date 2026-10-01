@@ -10,11 +10,12 @@ import {
   ChevronRight,
   Shield,
   Layers,
-  Sparkles
+  Sparkles,
+  Sun
 } from 'lucide-react';
 import { Loteo } from '../types';
 import { SafeImage } from './SafeImage';
-import { buildWhatsAppLink, DISPLAY_PHONE } from '../utils/whatsapp';
+import { buildWhatsAppLink, DISPLAY_PHONE, DISPLAY_EMAIL } from '../utils/whatsapp';
 import { InteractiveMasterplan } from './InteractiveMasterplan';
 
 interface LoteoDetailViewProps {
@@ -65,9 +66,9 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
         <div className="flex items-center justify-between">
           <button
             onClick={onBack}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-[#595247] hover:text-[#1E1B17] transition-colors py-1 cursor-pointer"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-[#595247] hover:text-[#C85A32] transition-colors py-1 cursor-pointer"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-4 h-4 text-[#C85A32]" />
             <span>Volver a todos los desarrollos</span>
           </button>
 
@@ -75,7 +76,7 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
             onClick={handleShare}
             className="inline-flex items-center gap-1.5 text-xs text-[#6A6256] hover:text-[#1E1B17] bg-[#EFEAE2] hover:bg-[#E5DFD4] px-3 py-1.5 rounded-md transition-colors cursor-pointer"
           >
-            <Share2 className="w-3.5 h-3.5" />
+            <Share2 className="w-3.5 h-3.5 text-[#C85A32]" />
             <span>{isCopied ? '¡Enlace copiado!' : 'Compartir loteo'}</span>
           </button>
         </div>
@@ -85,13 +86,15 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
       <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-12 sm:mb-16">
         <div className="max-w-4xl mb-8">
           <div className="flex items-center gap-2 text-xs text-[#70675B] mb-3">
-            <span className="font-semibold text-[#3D553C] flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5" />
+            <span className="font-semibold text-[#3D583F] flex items-center gap-1">
+              <MapPin className="w-3.5 h-3.5 text-[#C85A32]" />
               {loteo.location}
             </span>
-            <span aria-hidden="true">·</span>
-            <span>{loteo.status}</span>
-            <span aria-hidden="true">·</span>
+            <span aria-hidden="true" className="text-[#C4BDB2]">·</span>
+            <span className="px-2 py-0.5 rounded text-[10.5px] font-medium bg-[#FBF0EB] text-[#C85A32] border border-[#F3D7CA]">
+              {loteo.status}
+            </span>
+            <span aria-hidden="true" className="text-[#C4BDB2]">·</span>
             <span>Lanzamiento {loteo.launchYear}</span>
           </div>
 
@@ -108,15 +111,15 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
               href={whatsAppLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg text-sm font-semibold text-white bg-[#3D553C] hover:bg-[#2D412D] transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg text-sm font-semibold text-white bg-[#3D583F] hover:bg-[#2F4932] transition-colors shadow-xs hover:shadow-sm"
             >
-              <MessageCircle className="w-4 h-4" />
+              <MessageCircle className="w-4 h-4 text-[#E5A238]" />
               <span>Consultar disponibilidad y precios</span>
             </a>
           </div>
         </div>
 
-        {/* Panoramic Large Hero Photo */}
+        {/* Panoramic Large Hero Photo - Genuine San Luis landscape */}
         <div className="rounded-2xl overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.06)] aspect-[16/9] md:aspect-[21/9] max-h-[580px] border border-[#E8E2D8]">
           <SafeImage
             src={loteo.coverImage}
@@ -131,10 +134,11 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
 
       {/* Quick Specs Strip */}
       <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-16">
-        <div className="bg-[#F5F1EB] rounded-2xl p-6 sm:p-8 border border-[#E5DFD4]">
-          <span className="text-xs uppercase tracking-wider text-[#70675B] font-medium block mb-4">
-            Ficha técnica del desarrollo
-          </span>
+        <div className="bg-[#F6F2EC] rounded-2xl p-6 sm:p-8 border border-[#E5DFD4]">
+          <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-[#C85A32] font-semibold mb-4">
+            <Sun className="w-3.5 h-3.5 text-[#E5A238]" />
+            <span>Ficha técnica del desarrollo</span>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-xs divide-y sm:divide-y-0 sm:divide-x divide-[#DDD5C9]">
             <div className="pt-2 sm:pt-0 sm:px-3 first:pl-0">
               <span className="text-[#787063] block mb-1">Superficie lotes</span>
@@ -156,13 +160,13 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
             </div>
             <div className="pt-2 sm:pt-0 sm:px-3">
               <span className="text-[#787063] block mb-1">Financiación</span>
-              <strong className="text-sm font-semibold text-[#3D553C] block">
+              <strong className="text-sm font-semibold text-[#C85A32] block">
                 Accesible en cuotas
               </strong>
             </div>
             <div className="pt-2 sm:pt-0 sm:px-3">
               <span className="text-[#787063] block mb-1">Estado de obra</span>
-              <strong className="text-sm font-semibold text-[#1E1B17] block">
+              <strong className="text-sm font-semibold text-[#3D583F] block">
                 {loteo.stage}
               </strong>
             </div>
@@ -187,7 +191,7 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
             <div className="space-y-4 text-base text-[#474035] leading-relaxed font-light mb-8">
               <p>{loteo.fullDescription}</p>
               <p>
-                Cada parcela fue delineada respetando la topografía original del lugar, permitiendo aprovechar las pendientes naturales para desagües pluviales y captación de visuales abiertas hacia los cerros y atardeceres de San Luis.
+                Cada parcela fue delineada respetando la topografía original de las serranías, permitiendo aprovechar las pendientes naturales para captación de visuales abiertas hacia los cerros y los atardeceres dorados de San Luis.
               </p>
             </div>
 
@@ -199,7 +203,7 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
               <ul className="space-y-3 text-xs sm:text-sm text-[#4A433A]">
                 {loteo.highlights.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#3D553C] shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-[#3D583F] shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -211,7 +215,7 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
           <div className="lg:col-span-5">
             <div className="bg-[#FAF8F5] p-6 sm:p-8 rounded-2xl border border-[#E5DFD4]">
               <div className="flex items-center gap-2 mb-4">
-                <Layers className="w-5 h-5 text-[#3D553C]" />
+                <Layers className="w-5 h-5 text-[#C85A32]" />
                 <h3 className="font-editorial text-2xl text-[#1E1B17]">
                   Infraestructura planificada
                 </h3>
@@ -226,7 +230,7 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
                     key={idx}
                     className="flex items-start gap-3 p-3 rounded-lg bg-[#F5F1EB] border border-[#EAE3D8]"
                   >
-                    <span className="w-5 h-5 rounded-full bg-[#E8E1D5] text-[#3D553C] flex items-center justify-center shrink-0 text-xs font-semibold">
+                    <span className="w-5 h-5 rounded-full bg-[#FAF0EA] text-[#C85A32] flex items-center justify-center shrink-0 text-xs font-semibold">
                       ✓
                     </span>
                     <span className="leading-snug">{infra}</span>
@@ -236,7 +240,7 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
 
               <div className="mt-6 pt-5 border-t border-[#EAE4DC] text-xs text-[#70675B]">
                 <p>
-                  <strong>Financiación Todo Lotes:</strong> {loteo.financing}.
+                  <strong className="text-[#C85A32]">Financiación Todo Lotes:</strong> {loteo.financing}.
                 </p>
               </div>
             </div>
@@ -247,9 +251,10 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
       {/* High-Impact Photo Gallery */}
       <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-16 sm:mb-20">
         <div className="mb-6">
-          <span className="text-xs uppercase tracking-wider text-[#70675B] font-medium block mb-1">
-            Registro visual
-          </span>
+          <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-[#C85A32] font-semibold mb-1">
+            <Sun className="w-3.5 h-3.5 text-[#E5A238]" />
+            <span>Registro visual</span>
+          </div>
           <h2 className="font-editorial text-2xl sm:text-3xl text-[#1E1B17]">
             Galería del lugar y su entorno
           </h2>
@@ -266,7 +271,7 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
           />
         </div>
 
-        {/* Thumbnail Selector (clean, unboxed cards) */}
+        {/* Thumbnail Selector */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           {loteo.gallery.map((imgUrl, i) => (
             <button
@@ -274,7 +279,7 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
               onClick={() => setSelectedGalleryImg(imgUrl)}
               className={`rounded-xl overflow-hidden aspect-[4/3] border-2 transition-all cursor-pointer ${
                 selectedGalleryImg === imgUrl
-                  ? 'border-[#3D553C] ring-2 ring-[#3D553C]/20 shadow-sm'
+                  ? 'border-[#C85A32] ring-2 ring-[#C85A32]/25 shadow-xs'
                   : 'border-transparent hover:border-[#DDD5C9] opacity-80 hover:opacity-100'
               }`}
             >
@@ -299,9 +304,10 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
       <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-16 sm:mb-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div className="lg:col-span-6">
-            <span className="text-xs uppercase tracking-wider text-[#70675B] font-medium block mb-2">
-              Ubicación & Conectividad
-            </span>
+            <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-[#C85A32] font-semibold mb-2">
+              <Sun className="w-3.5 h-3.5 text-[#E5A238]" />
+              <span>Ubicación & Conectividad</span>
+            </div>
             <h2 className="font-editorial text-2xl sm:text-3xl text-[#1E1B17] mb-4">
               {loteo.locationDetails.address}
             </h2>
@@ -322,7 +328,7 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
                   <div key={i} className="py-2.5 flex items-center justify-between">
                     <span className="text-[#3A342C] font-medium">{dist.place}</span>
                     <div className="flex items-center gap-3 text-[#6E6659]">
-                      <span className="tabular-nums font-semibold text-[#1E1B17]">{dist.time}</span>
+                      <span className="tabular-nums font-semibold text-[#C85A32]">{dist.time}</span>
                       <span aria-hidden="true" className="text-[#BDB4A8]">·</span>
                       <span className="tabular-nums text-[#7A7165]">{dist.distance}</span>
                     </div>
@@ -336,8 +342,8 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
           <div className="lg:col-span-6 bg-[#EFEAE2] rounded-2xl p-6 sm:p-8 border border-[#DDD6C8] flex flex-col justify-between min-h-[320px]">
             <div>
               <div className="flex items-center gap-2 text-xs text-[#70675B] mb-2">
-                <MapPin className="w-4 h-4 text-[#3D553C]" />
-                <span className="font-medium text-[#24211D]">Coordenadas & Accesibilidad</span>
+                <MapPin className="w-4 h-4 text-[#C85A32]" />
+                <span className="font-semibold text-[#24211D]">Coordenadas & Accesibilidad</span>
               </div>
               <h4 className="font-editorial text-xl text-[#1E1B17] mb-3">
                 Cómo llegar a {loteo.name}
@@ -347,9 +353,9 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-white/80 border border-[#DDD5C9] space-y-3">
+            <div className="p-4.5 rounded-xl bg-white/90 border border-[#DDD5C9] space-y-3 shadow-2xs">
               <div className="text-xs text-[#332D25]">
-                <strong className="block mb-0.5">Visita guiada en vehículo 4x4 o particular:</strong>
+                <strong className="block mb-0.5 text-[#1E1B17]">Visita guiada en el terreno:</strong>
                 <span>Te facilitamos la ubicación GPS en tiempo real al coordinar por WhatsApp.</span>
               </div>
               <a
@@ -359,10 +365,10 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
                 })}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-semibold text-[#3D553C] hover:text-[#2D412D]"
+                className="inline-flex items-center gap-2 text-xs font-semibold text-[#3D583F] hover:text-[#C85A32] transition-colors"
               >
                 <span>Agendar visita presencial este fin de semana</span>
-                <ChevronRight className="w-3.5 h-3.5" />
+                <ChevronRight className="w-3.5 h-3.5 text-[#C85A32]" />
               </a>
             </div>
           </div>
@@ -381,9 +387,9 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
           href={whatsAppLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold text-white bg-[#3D553C] hover:bg-[#2D412D] active:scale-[0.99] transition-all shadow-md"
+          className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold text-white bg-[#3D583F] hover:bg-[#2F4932] active:scale-[0.99] transition-all shadow-md hover:shadow-lg"
         >
-          <MessageCircle className="w-5 h-5 fill-white/20" />
+          <MessageCircle className="w-5 h-5 fill-white/20 text-white" />
           <span>Consultar por WhatsApp ahora</span>
         </a>
       </div>
@@ -391,7 +397,7 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
       {/* Other Developments Suggestion */}
       {otherLoteos.length > 0 && (
         <div className="max-w-7xl mx-auto px-5 sm:px-8 mt-20 pt-12 border-t border-[#EAE4DC]">
-          <span className="text-xs uppercase tracking-wider text-[#70675B] font-medium block mb-4">
+          <span className="text-xs uppercase tracking-wider text-[#C85A32] font-semibold block mb-4">
             Otros desarrollos en San Luis
           </span>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -402,7 +408,7 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                   onSelectOtherLoteo(other.slug);
                 }}
-                className="group cursor-pointer p-4 rounded-xl bg-[#F5F1EB] border border-[#E5DFD4] hover:border-[#3D553C]/40 flex items-center gap-4 transition-all"
+                className="group cursor-pointer p-4 rounded-xl bg-[#F6F2EC] border border-[#E5DFD4] hover:border-[#C85A32]/40 flex items-center gap-4 transition-all"
               >
                 <div className="w-24 h-20 rounded-lg overflow-hidden shrink-0">
                   <SafeImage
@@ -414,10 +420,10 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
                   />
                 </div>
                 <div className="grow">
-                  <span className="text-[11px] text-[#3D553C] font-semibold block">
+                  <span className="text-[11px] text-[#3D583F] font-semibold block">
                     {other.location}
                   </span>
-                  <h4 className="font-editorial text-lg text-[#1E1B17] group-hover:text-[#3D553C] transition-colors">
+                  <h4 className="font-editorial text-lg text-[#1E1B17] group-hover:text-[#C85A32] transition-colors">
                     {other.name}
                   </h4>
                   <span className="text-xs text-[#70675B]">
@@ -433,3 +439,4 @@ export const LoteoDetailView: React.FC<LoteoDetailViewProps> = ({
     </article>
   );
 };
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, MapPin, Sparkles, PhoneCall } from 'lucide-react';
+import { Sun, ArrowRight, MapPin } from 'lucide-react';
 import { SafeImage } from './SafeImage';
 import { buildWhatsAppLink } from '../utils/whatsapp';
 
@@ -7,14 +7,15 @@ export const AboutUs: React.FC = () => {
   const whatsAppLink = buildWhatsAppLink({ messageType: 'visita' });
 
   return (
-    <section id="nosotros" className="py-16 sm:py-24 bg-[#EFEAE2] border-t border-[#DFD8CC]">
+    <section id="nosotros" className="py-16 sm:py-24 bg-[#EFEAE2] border-t border-[#DFD8CC] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left Text Block */}
           <div className="lg:col-span-6">
-            <span className="text-xs uppercase tracking-wider text-[#696155] font-medium block mb-2">
-              Quiénes somos
-            </span>
+            <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-[#C85A32] font-semibold mb-2">
+              <Sun className="w-3.5 h-3.5 text-[#E5A238]" />
+              <span>Quiénes somos</span>
+            </div>
             <h2 className="font-editorial text-3xl sm:text-4xl md:text-5xl text-[#1E1B17] font-normal tracking-tight mb-6">
               Mucho más que vender terrenos.
             </h2>
@@ -32,16 +33,16 @@ export const AboutUs: React.FC = () => {
               </p>
             </div>
 
-            {/* Quiet human facts */}
+            {/* Quiet human facts with warm accent figures */}
             <div className="grid grid-cols-2 gap-4 py-4 border-y border-[#DDD6C8] mb-8 text-xs text-[#3D372F]">
               <div>
-                <span className="font-editorial text-2xl font-normal text-[#1E1B17] block mb-0.5 tabular-nums">
+                <span className="font-editorial text-2xl sm:text-3xl font-normal text-[#C85A32] block mb-0.5 tabular-nums">
                   +10 años
                 </span>
                 <span className="text-[#6D6559]">De trayectoria en el territorio de San Luis</span>
               </div>
               <div>
-                <span className="font-editorial text-2xl font-normal text-[#1E1B17] block mb-0.5 tabular-nums">
+                <span className="font-editorial text-2xl sm:text-3xl font-normal text-[#3D583F] block mb-0.5 tabular-nums">
                   100%
                 </span>
                 <span className="text-[#6D6559]">Desarrollos con verificación legal y técnica previa</span>
@@ -52,14 +53,14 @@ export const AboutUs: React.FC = () => {
               href={whatsAppLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#3D553C] hover:text-[#2D412D] transition-colors"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#3D583F] hover:text-[#C85A32] transition-colors group"
             >
               <span>Coordinar una visita o charla informativa</span>
-              <span aria-hidden="true">→</span>
+              <ArrowRight className="w-4 h-4 text-[#C85A32] group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
 
-          {/* Right Image Composition */}
+          {/* Right Image Composition - genuine San Luis open ground inspection */}
           <div className="lg:col-span-6">
             <div className="relative rounded-2xl overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.06)] border border-[#DDD6C8] aspect-[4/3] sm:aspect-[16/11]">
               <SafeImage
@@ -70,7 +71,7 @@ export const AboutUs: React.FC = () => {
                 className="w-full h-full object-cover"
                 containerClassName="w-full h-full"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-5 left-5 right-5 text-white">
                 <span className="font-editorial text-lg block text-white/95">
                   Conocemos cada rincón de San Luis
@@ -86,3 +87,4 @@ export const AboutUs: React.FC = () => {
     </section>
   );
 };
+

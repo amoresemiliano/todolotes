@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { ArrowRight, MapPin, Layers, CheckCircle2, Search } from 'lucide-react';
+import { ArrowRight, MapPin, Layers, CheckCircle2, Search, Sun } from 'lucide-react';
 import { Loteo } from '../types';
 import { SafeImage } from './SafeImage';
 
@@ -33,25 +33,39 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
     });
   }, [loteos, activeZone, searchQuery]);
 
+  const getStatusBadgeStyle = (status: Loteo['status']) => {
+    switch (status) {
+      case 'Preventa exclusiva':
+        return 'bg-[#FBF0EB] text-[#C85A32] border border-[#F3D7CA]';
+      case 'Últimos lotes':
+        return 'bg-[#FDF6E9] text-[#B87D25] border border-[#F6E3C0]';
+      case 'Obras iniciadas':
+        return 'bg-[#F7F3EE] text-[#7A6348] border border-[#E8DEC8]';
+      default:
+        return 'bg-[#F2F6F2] text-[#3D583F] border border-[#D7E4D8]';
+    }
+  };
+
   return (
-    <section id="loteos" className="py-16 sm:py-24 border-t border-[#EAE4DC] bg-[#FAF8F5]">
+    <section id="loteos" className="py-16 sm:py-24 border-t border-[#EAE4DC] bg-[#FAF8F5] relative">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-10 sm:mb-14">
-          <span className="text-xs uppercase tracking-wider text-[#696155] font-medium block mb-2">
-            Catálogo de desarrollos
-          </span>
+          <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider text-[#C85A32] font-semibold mb-2">
+            <Sun className="w-3.5 h-3.5 text-[#E5A238]" />
+            <span>Catálogo de desarrollos</span>
+          </div>
           <h2 className="font-editorial text-3xl sm:text-4xl md:text-5xl text-[#1E1B17] font-normal tracking-tight">
             Encontrá el lugar para tu próximo proyecto
           </h2>
           <p className="mt-3 text-base sm:text-lg text-[#5E564B] font-light">
-            Conocé nuestros desarrollos y descubrí dónde puede empezar tu próxima historia.
+            Conocé nuestros desarrollos y descubrí dónde puede empezar tu próxima historia en las sierras.
           </p>
         </div>
 
         {/* Filter and Search Bar */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 pb-6 border-b border-[#EAE4DC]">
-          {/* Segmented Filter Buttons (functional filter controls, not static pills) */}
+          {/* Segmented Filter Buttons */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
             {zones.map((zone) => {
               const label = zone === 'todos' ? 'Todos los loteos' : zone;
@@ -62,8 +76,8 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
                   onClick={() => setActiveZone(zone)}
                   className={`px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-md whitespace-nowrap transition-colors cursor-pointer ${
                     isActive
-                      ? 'bg-[#3D553C] text-white shadow-xs'
-                      : 'bg-[#EFEAE2] text-[#595247] hover:text-[#1E1B17] hover:bg-[#E5DFD4]'
+                      ? 'bg-[#3D583F] text-white shadow-xs'
+                      : 'bg-[#EFEAE2] text-[#595247] hover:text-[#C85A32] hover:bg-[#E7DFC5]/80'
                   }`}
                 >
                   {label}
@@ -80,7 +94,7 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Buscar por zona o nombre..."
-              className="w-full pl-9 pr-3 py-1.5 bg-[#FAF8F5] border border-[#DDD5C9] rounded-md text-xs sm:text-sm text-[#26221D] placeholder:text-[#8C8376] focus:outline-none focus:border-[#3D553C] transition-colors"
+              className="w-full pl-9 pr-3 py-1.5 bg-[#FAF8F5] border border-[#DDD5C9] rounded-md text-xs sm:text-sm text-[#26221D] placeholder:text-[#8C8376] focus:outline-none focus:border-[#C85A32] transition-colors"
             />
           </div>
         </div>
@@ -99,7 +113,7 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
                 setActiveZone('todos');
                 setSearchQuery('');
               }}
-              className="px-4 py-2 bg-[#3D553C] text-white rounded-lg text-xs font-medium"
+              className="px-4 py-2 bg-[#3D583F] text-white rounded-lg text-xs font-medium cursor-pointer"
             >
               Restablecer filtros
             </button>
@@ -109,7 +123,6 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
         {/* Dynamic Editorial Layout: Asymmetric Composition */}
         <div className="space-y-10 sm:space-y-14">
           {filteredLoteos.map((loteo, index) => {
-            // Alternating layouts: First is wide featured horizontal, next are two-column, then full-width banner
             const isFullHero = index === 0 && activeZone === 'todos' && searchQuery === '';
             const isWideAccent = index === 3 && activeZone === 'todos' && searchQuery === '';
 
@@ -118,7 +131,7 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
                 <div
                   key={loteo.id}
                   onClick={() => onSelectLoteo(loteo.slug)}
-                  className="group cursor-pointer rounded-2xl bg-[#F5F1EB] border border-[#E5DFD4] overflow-hidden transition-all duration-300 hover:border-[#3D553C]/40 hover:shadow-[0_16px_36px_rgba(0,0,0,0.06)]"
+                  className="group cursor-pointer rounded-2xl bg-[#F6F2EC] border border-[#E5DFD4] overflow-hidden transition-all duration-300 hover:border-[#C85A32]/45 hover:shadow-[0_16px_36px_rgba(200,90,50,0.06)]"
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-12">
                     <div className="lg:col-span-7 relative aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto lg:h-[460px] overflow-hidden">
@@ -134,16 +147,18 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
                     <div className="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between">
                       <div>
                         {/* Unboxed metadata with typographic separators */}
-                        <div className="flex items-center gap-2 text-xs text-[#70675B] mb-2">
-                          <span className="flex items-center gap-1 font-medium text-[#3D553C]">
-                            <MapPin className="w-3.5 h-3.5" />
+                        <div className="flex items-center gap-2 text-xs text-[#70675B] mb-2.5">
+                          <span className="flex items-center gap-1 font-semibold text-[#3D583F]">
+                            <MapPin className="w-3.5 h-3.5 text-[#C85A32]" />
                             {loteo.location}
                           </span>
                           <span aria-hidden="true">·</span>
-                          <span>{loteo.status}</span>
+                          <span className={`px-2 py-0.5 rounded text-[10.5px] font-medium ${getStatusBadgeStyle(loteo.status)}`}>
+                            {loteo.status}
+                          </span>
                         </div>
 
-                        <h3 className="font-editorial text-2xl sm:text-3xl text-[#1E1B17] group-hover:text-[#3D553C] transition-colors mb-3">
+                        <h3 className="font-editorial text-2xl sm:text-3xl text-[#1E1B17] group-hover:text-[#C85A32] transition-colors mb-3">
                           {loteo.name}
                         </h3>
 
@@ -178,7 +193,7 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
                         <span className="text-xs text-[#6E6659] font-light">
                           {loteo.stage}
                         </span>
-                        <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#3D553C] group-hover:translate-x-1 transition-transform">
+                        <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#C85A32] group-hover:translate-x-1 transition-transform">
                           Ver desarrollo
                           <ArrowRight className="w-4 h-4" />
                         </span>
@@ -194,17 +209,19 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
                 <div
                   key={loteo.id}
                   onClick={() => onSelectLoteo(loteo.slug)}
-                  className="group cursor-pointer rounded-2xl bg-[#EFEAE2] border border-[#DDD6C8] overflow-hidden transition-all duration-300 hover:border-[#3D553C]/40 hover:shadow-[0_16px_36px_rgba(0,0,0,0.06)]"
+                  className="group cursor-pointer rounded-2xl bg-[#EFEAE2] border border-[#DDD6C8] overflow-hidden transition-all duration-300 hover:border-[#C85A32]/45 hover:shadow-[0_16px_36px_rgba(200,90,50,0.06)]"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-12">
                     <div className="md:col-span-6 p-6 sm:p-10 flex flex-col justify-between order-2 md:order-1">
                       <div>
-                        <div className="flex items-center gap-2 text-xs text-[#70675B] mb-2">
-                          <span className="font-medium text-[#3D553C]">{loteo.location}</span>
+                        <div className="flex items-center gap-2 text-xs text-[#70675B] mb-2.5">
+                          <span className="font-semibold text-[#3D583F]">{loteo.location}</span>
                           <span aria-hidden="true">·</span>
-                          <span>{loteo.status}</span>
+                          <span className={`px-2 py-0.5 rounded text-[10.5px] font-medium ${getStatusBadgeStyle(loteo.status)}`}>
+                            {loteo.status}
+                          </span>
                         </div>
-                        <h3 className="font-editorial text-2xl sm:text-3xl text-[#1E1B17] group-hover:text-[#3D553C] transition-colors mb-3">
+                        <h3 className="font-editorial text-2xl sm:text-3xl text-[#1E1B17] group-hover:text-[#C85A32] transition-colors mb-3">
                           {loteo.name}
                         </h3>
                         <p className="text-sm sm:text-base text-[#524B40] leading-relaxed font-light mb-6">
@@ -221,13 +238,13 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
                           </div>
                           <div>
                             <span className="text-[#787063]">Financiación:</span>{' '}
-                            <strong className="text-[#1E1B17]">Accesible</strong>
+                            <strong className="text-[#C85A32]">Accesible</strong>
                           </div>
                         </div>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-xs text-[#6E6659]">{loteo.financing}</span>
-                        <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#3D553C] group-hover:translate-x-1 transition-transform">
+                        <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#C85A32] group-hover:translate-x-1 transition-transform">
                           Ver desarrollo
                           <ArrowRight className="w-4 h-4" />
                         </span>
@@ -253,7 +270,7 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
               <div
                 key={loteo.id}
                 onClick={() => onSelectLoteo(loteo.slug)}
-                className="group cursor-pointer rounded-2xl bg-[#F5F1EB] border border-[#E5DFD4] overflow-hidden transition-all duration-300 hover:border-[#3D553C]/40 hover:shadow-[0_12px_32px_rgba(0,0,0,0.05)] flex flex-col md:flex-row"
+                className="group cursor-pointer rounded-2xl bg-[#F6F2EC] border border-[#E5DFD4] overflow-hidden transition-all duration-300 hover:border-[#C85A32]/45 hover:shadow-[0_12px_32px_rgba(200,90,50,0.06)] flex flex-col md:flex-row"
               >
                 <div className="md:w-5/12 relative aspect-[16/10] md:aspect-auto min-h-[260px] md:min-h-[320px] overflow-hidden">
                   <SafeImage
@@ -264,8 +281,7 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
                     className="w-full h-full object-cover img-hover-zoom"
                     containerClassName="w-full h-full"
                   />
-                  {/* Status label as subtle overlay text */}
-                  <div className="absolute top-3 left-3 bg-[#FAF8F5]/90 backdrop-blur-xs px-2.5 py-1 rounded text-[11px] font-medium text-[#2E2822]">
+                  <div className="absolute top-3 left-3 bg-[#FAF8F5]/95 backdrop-blur-xs px-2.5 py-1 rounded text-[11px] font-medium text-[#2E2822] shadow-xs">
                     {loteo.status}
                   </div>
                 </div>
@@ -274,12 +290,12 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
                   <div>
                     {/* Unboxed metadata */}
                     <div className="flex items-center gap-2 text-xs text-[#70675B] mb-1.5">
-                      <span className="font-medium text-[#3D553C]">{loteo.location}</span>
+                      <span className="font-semibold text-[#3D583F]">{loteo.location}</span>
                       <span aria-hidden="true">·</span>
                       <span className="tabular-nums">{loteo.launchYear}</span>
                     </div>
 
-                    <h3 className="font-editorial text-2xl text-[#1E1B17] group-hover:text-[#3D553C] transition-colors mb-2.5">
+                    <h3 className="font-editorial text-2xl text-[#1E1B17] group-hover:text-[#C85A32] transition-colors mb-2.5">
                       {loteo.name}
                     </h3>
 
@@ -307,7 +323,7 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
 
                   <div className="flex items-center justify-between pt-3 border-t border-[#E5DFD4]">
                     <span className="text-xs text-[#6E6659]">{loteo.stage}</span>
-                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#3D553C] group-hover:translate-x-1 transition-transform">
+                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#C85A32] group-hover:translate-x-1 transition-transform">
                       Ver desarrollo
                       <ArrowRight className="w-4 h-4" />
                     </span>
@@ -321,3 +337,4 @@ export const ExploreLoteos: React.FC<ExploreLoteosProps> = ({
     </section>
   );
 };
+

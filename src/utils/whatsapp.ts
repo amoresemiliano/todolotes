@@ -1,7 +1,7 @@
-export const TODO_LOTES_WHATSAPP = '5492664589012'; // San Luis, Argentina area code 266
-export const DISPLAY_PHONE = '+54 9 266 458-9012';
-export const DISPLAY_EMAIL = 'contacto@todolotes.com.ar';
-export const DISPLAY_LOCATION = 'San Luis Capital & Interior, Argentina';
+export const TODO_LOTES_WHATSAPP = '5492664586836';
+export const DISPLAY_PHONE = '+54 9 2664 586 836';
+export const DISPLAY_EMAIL = 'info@todolotes.ar';
+export const DISPLAY_LOCATION = 'San Luis Capital & Sierras, Argentina';
 
 interface WhatsAppOptions {
   loteoName?: string;
@@ -11,18 +11,18 @@ interface WhatsAppOptions {
 }
 
 export function buildWhatsAppLink(options: WhatsAppOptions = {}): string {
-  const { loteoName, parcelCode, surfaceM2, messageType = 'general' } = options;
+  const { loteoName, parcelCode, messageType = 'general' } = options;
 
-  let text = 'Hola Todo Lotes, me gustaría recibir asesoramiento.';
+  let text = 'Hola, estuve viendo la web de Todo Lotes y quisiera recibir más información sobre los desarrollos disponibles.';
 
   if (messageType === 'parcel' && loteoName && parcelCode) {
-    text = `Hola Todo Lotes! Me interesa consultar por el lote ${parcelCode} (${surfaceM2 ? surfaceM2 + ' m²' : ''}) en el desarrollo "${loteoName}". ¿Podrían brindarme información de disponibilidad y opciones de financiación? Muchas gracias.`;
-  } else if (loteoName) {
-    text = `Hola Todo Lotes! Vi el desarrollo "${loteoName}" en la web y me gustaría recibir más información sobre disponibilidad, valores y financiación. Muchas gracias.`;
+    text = `Hola, estoy interesado/a en el lote ${parcelCode} del desarrollo ${loteoName}. Quisiera recibir más información.`;
+  } else if (messageType === 'loteo' && loteoName) {
+    text = `Hola, estoy interesado/a en ${loteoName} y quisiera consultar disponibilidad, precios y financiación.`;
   } else if (messageType === 'visita') {
-    text = 'Hola Todo Lotes! Quisiera coordinar una visita personalizada a los loteos disponibles en San Luis. ¿Qué días tienen agendadas recorridas?';
-  } else {
-    text = 'Hola Todo Lotes! Estuve recorriendo su sitio web y me gustaría que me asesoren sobre los loteos y terrenos disponibles en San Luis.';
+    text = 'Hola, quisiera coordinar una visita personalizada a los loteos en San Luis.';
+  } else if (loteoName) {
+    text = `Hola, estoy interesado/a en ${loteoName} y quisiera consultar disponibilidad, precios y financiación.`;
   }
 
   return `https://wa.me/${TODO_LOTES_WHATSAPP}?text=${encodeURIComponent(text)}`;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mountain, Trees } from 'lucide-react';
+import { Mountain, Trees, Sun } from 'lucide-react';
 
 interface SafeImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   fallbackTitle?: string;
@@ -23,27 +23,30 @@ export const SafeImage: React.FC<SafeImageProps> = ({
   if (hasError || !src) {
     return (
       <div
-        className={`relative overflow-hidden bg-gradient-to-br from-[#EAE4DC] via-[#E2DACF] to-[#D5C9BC] flex flex-col items-center justify-center p-6 text-center text-[#5A5248] select-none ${containerClassName}`}
+        className={`relative overflow-hidden bg-gradient-to-br from-[#EFEAE2] via-[#E8DFCFCF] to-[#DFCDBA] flex flex-col items-center justify-center p-6 text-center text-[#554D43] select-none ${containerClassName}`}
       >
-        <div className="absolute inset-0 opacity-15 pointer-events-none">
+        {/* Subtle topographic contour vector background */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <pattern id="contour-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
-                <path d="M0 30 Q 15 15, 30 30 T 60 30" fill="none" stroke="#2D3A29" strokeWidth="1" />
-                <path d="M0 45 Q 15 35, 30 45 T 60 45" fill="none" stroke="#2D3A29" strokeWidth="0.75" />
+              <pattern id="contour-pattern-sl" width="70" height="70" patternUnits="userSpaceOnUse">
+                <path d="M0 35 Q 17.5 20, 35 35 T 70 35" fill="none" stroke="#3D583F" strokeWidth="1" />
+                <path d="M0 50 Q 17.5 38, 35 50 T 70 50" fill="none" stroke="#C85A32" strokeWidth="0.8" opacity="0.6" />
+                <path d="M0 62 Q 17.5 54, 35 62 T 70 62" fill="none" stroke="#3D583F" strokeWidth="0.6" />
               </pattern>
             </defs>
-            <rect width="100%" height="100%" fill="url(#contour-pattern)" />
+            <rect width="100%" height="100%" fill="url(#contour-pattern-sl)" />
           </svg>
         </div>
+
         <div className="relative z-10 flex flex-col items-center max-w-xs">
-          <div className="w-12 h-12 rounded-full bg-[#FAF8F5]/80 flex items-center justify-center mb-3 text-[#3D553C] shadow-sm">
-            <Mountain className="w-6 h-6 stroke-[1.5]" />
+          <div className="w-12 h-12 rounded-full bg-[#FAF8F5] flex items-center justify-center mb-3 text-[#3D583F] shadow-xs border border-[#E2DBD0]">
+            <Mountain className="w-5 h-5 stroke-[1.6]" />
           </div>
-          <span className="font-editorial text-lg text-[#2A2621] leading-tight mb-1">
-            {fallbackTitle || alt || 'Todo Lotes'}
+          <span className="font-editorial text-lg text-[#26221D] leading-tight mb-1">
+            {fallbackTitle || alt || 'Todo Lotes San Luis'}
           </span>
-          <span className="text-xs text-[#736B60] tracking-wide">
+          <span className="text-xs text-[#7A7165] tracking-wide">
             {fallbackSubtitle}
           </span>
         </div>
@@ -52,10 +55,10 @@ export const SafeImage: React.FC<SafeImageProps> = ({
   }
 
   return (
-    <div className={`relative overflow-hidden bg-[#EAE4DC] ${containerClassName}`}>
+    <div className={`relative overflow-hidden bg-[#EFEAE2] ${containerClassName}`}>
       {!isLoaded && (
-        <div className="absolute inset-0 bg-[#E8E2D9] animate-pulse flex items-center justify-center">
-          <Trees className="w-6 h-6 text-[#9A8F82] opacity-40" />
+        <div className="absolute inset-0 bg-[#E8E0D4] animate-pulse flex items-center justify-center">
+          <Trees className="w-6 h-6 text-[#9A8E7E] opacity-50" />
         </div>
       )}
       <img
